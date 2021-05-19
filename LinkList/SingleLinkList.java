@@ -112,6 +112,20 @@ public class SingleLinkList {
         System.out.println();
     }
 
+    /**
+     * implement for LRU(Least Recently used) algorithm
+     */
+    public void lruAlgorithm (SingleLinkList singleLinkList){
+        singleLinkList.addToHead(5);
+        singleLinkList.addToTrail(4);
+        singleLinkList.addToTrail(3);
+        // if non-value of singleLinkList
+            // add to head
+        // if existed of singleLinkList
+            // delete old node
+            // add to head
+    }
+
     public static void main(String[] args) {
         SingleLinkList singleLinkList = new SingleLinkList();
         singleLinkList.display(singleLinkList);
