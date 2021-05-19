@@ -13,60 +13,54 @@ public class CircleLinkList {
    public void addToHead(int value) {
        DoubleLinkList.DoubleNode newDoubleNode = new DoubleLinkList.DoubleNode(value);
        if(this.head == null) {
+           // link to  itself
            newDoubleNode.setNextNode(newDoubleNode);
            newDoubleNode.setPreNode(newDoubleNode);
+           this.head = newDoubleNode;
        } else {
-         newDoubleNode.setNextNode(head);
-         newDoubleNode.setPreNode(head.getPreNode());
-         head.setPreNode(newDoubleNode);
+           // only a node(head)
+           if(this.size == 1) {
+              newDoubleNode.setNextNode(head);
+              newDoubleNode.setPreNode(head);
+              head.setPreNode(newDoubleNode);
+              head.setNextNode(newDoubleNode);
+           }else {
+             DoubleLinkList.DoubleNode tempNode = head;
+             while (tempNode.getNextNode() != head) {
+                 tempNode = tempNode.getNextNode();
+             }
+               newDoubleNode.setNextNode(head);
+               newDoubleNode.setPreNode(tempNode.getNextNode());
+               head.setPreNode(newDoubleNode);
+               tempNode.setNextNode(newDoubleNode);
+           }
+           this.head = newDoubleNode;
        }
-       this.head = newDoubleNode;
        this.size++;
    }
 
 public void addToTail(int value) {
     DoubleLinkList.DoubleNode newDoubleNode = new DoubleLinkList.DoubleNode(value);
-    if(this.head == null) {
-        head = newDoubleNode;
-        head.setNextNode(newDoubleNode);
-        head.setPreNode(newDoubleNode);
-    } else {
-       DoubleLinkList.DoubleNode temp = head;
-       while (temp.getNextNode() == head) {
-          newDoubleNode.setPreNode(temp.getNextNode());
-          newDoubleNode.setNextNode(head);
-          temp.getNextNode().setNextNode(newDoubleNode);
-          return;
-       }
-        temp = temp.getNextNode();
-    }
-}
-public void printAll(CircleLinkList c) {
-   if(c.head == null) {
-       System.out.println("circleLinkList is empty");
-   }else {
-       DoubleLinkList.DoubleNode p = head;
-       while (p.getNextNode() != head) {
-           System.out.printf("%d=",p.getValue());
-       }
-       p = p.getNextNode();
-   }
+        DoubleLinkList.DoubleNode p = head;
+        while(p.getNextNode() != head) {
+           p = p.getNextNode();
+        }
+    newDoubleNode.setPreNode(p.getNextNode());
+    newDoubleNode.setNextNode(head);
+    p.getNextNode().setNextNode(newDoubleNode);
+    this.size++;
 }
 
     public static void main(String[] args) {
         CircleLinkList circleLinkList = new CircleLinkList();
-        circleLinkList.printAll(circleLinkList);
         circleLinkList.addToHead(1);
-        circleLinkList.printAll(circleLinkList);
-        circleLinkList.addToTail(2);
-        circleLinkList.printAll(circleLinkList);
+        System.out.println(circleLinkList.getHead().getValue()); // 1
+        circleLinkList.addToHead(2);
+        System.out.println(circleLinkList.getHead().getValue());// 2
+        System.out.println(circleLinkList.getHead().getNextNode().getValue()); // 1
+        circleLinkList.addToTail(3);
+        System.out.println(circleLinkList.getHead().getNextNode().getValue()); // 3
     }
-
-
-
-
-
-
 
     public DoubleLinkList.DoubleNode getHead() {
         return head;
